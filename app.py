@@ -2,7 +2,7 @@
 from importlib import import_module
 import os
 from flask import Flask, render_template, Response, request
-import RPi.GPIO as GPIO
+import time
 # import camera driver
 if os.environ.get('CAMERA'):
     Camera = import_module('camera_' + os.environ['CAMERA']).Camera
@@ -48,6 +48,9 @@ def snapshot():
     """Video streaming route. Put this in the src attribute of an img tag."""
     # if(not cam.leds_on):
     #     led.switch_leds(True)
+    if(not led.leds_on()):
+        led.switch_leds(True)
+        time.sleep(0.1)
     return Response(gen_snapshot(cam),
                     mimetype='image/jpeg')
         
