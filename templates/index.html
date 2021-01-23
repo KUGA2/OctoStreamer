@@ -1,9 +1,11 @@
 <html>
   <head>
-    <title>Video Streaming Demonstration</title>
+    <title>PyStreamer with LED</title>
   </head>
   <body>
-    <h1>Video Streaming Demonstration</h1>
-    <img src="{{ url_for('video_feed') }}">
+    <h1>PyStreamer with LED</h1>
+    <h2>Pages</h2>
+    <p>- Take a snapshot: <a href="{{ url_for('snapshot') }}">/snapshot</a></p>
+    <p>- See the stream: <a href="{{ url_for('video_feed') }}">/video_feed</a></p>
   </body>
 </html>
