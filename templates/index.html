@@ -9,5 +9,9 @@
     <p>- See the stream: <a href="{{ url_for('video_feed') }}">/video_feed</a></p>
       <p>- Switch LED on: <a href="{{ url_for('led_on') }}">/led_on</a></p>
       <p>- Switch LED off: <a href="{{ url_for('led_off') }}">/led_off</a></p>
+    <h2>Config</h2>
+      <p><em>Adjust config.json and restart server for changes!</em></p>
+      <p>Pin for LED: pin: {{pin}}</p>
+      <p>Delay before snapshot (seconds): shapshot_delay: {{shapshot_delay}}</p>
   </body>
 </html>

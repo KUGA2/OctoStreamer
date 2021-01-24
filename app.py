@@ -3,6 +3,7 @@ from importlib import import_module
 import os
 from flask import Flask, render_template, Response, request, redirect
 import time
+import json
 # import camera driver
 if os.environ.get('CAMERA'):
     Camera = import_module('camera_' + os.environ['CAMERA']).Camera
@@ -20,9 +21,8 @@ cam = Camera(led)
 
 @app.route('/')
 def index():
-    """Video streaming home page."""
-    return render_template('index.html')
-
+    """Index page."""
+    return render_template("index.html", pin=str(config['pin']), shapshot_delay=str(config['shapshot_delay']), led_state=str(led.status()))
 
 def gen(camera):
     """Video streaming generator function."""
