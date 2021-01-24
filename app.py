@@ -11,8 +11,11 @@ else:
 
 Led = import_module('led').Led
 # Raspberry Pi camera module (requires picamera package)
+
+with open('config.json') as f:
+    config = json.load(f)
 app = Flask(__name__)
-led = Led(21)
+led = Led(config['pin'])
 cam = Camera(led)
 
 @app.route('/')
@@ -50,7 +53,7 @@ def snapshot():
     #     led.switch_leds(True)
     if(not led.leds_on()):
         led.switch_leds(True)
-        time.sleep(0.1)
+        time.sleep(config['shapshot_delay'])
     return Response(gen_snapshot(cam),
                     mimetype='image/jpeg')
         
