@@ -32,6 +32,15 @@ Run the program with:
 
     CAMERA=v4l2 python3 app.py
 
+If you get an error message
+
+    OSError: [Errno 16] Device or resource busy
+
+you are probably already running a stream. If you are on OctoPi with
+you can stop the preinstalled mjpg-streamer.
+    
+    sudo systemctl stop webcamd
+
 ### Test
 
 - Go to http://localhost:<port> in your browser. In Config, it should show your
