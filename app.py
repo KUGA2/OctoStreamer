@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from importlib import import_module
 import os
-from flask import Flask, render_template, Response, request
+from flask import Flask, render_template, Response, request, redirect
 import time
 # import camera driver
 if os.environ.get('CAMERA'):
@@ -54,6 +54,16 @@ def snapshot():
     return Response(gen_snapshot(cam),
                     mimetype='image/jpeg')
         
+@app.route('/led_on')
+def led_on():
+    led.switch_leds(True)
+    return redirect('/')
+
+@app.route('/led_off')
+def led_off():
+    led.switch_leds(False)
+    return redirect('/')
+
 @app.route('/control_leds', methods=['POST'])
 def control_leds():
     """Video streaming route. Put this in the src attribute of an img tag."""
