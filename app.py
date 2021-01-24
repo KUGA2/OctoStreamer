@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from importlib import import_module
 import os
-from flask import Flask, render_template, Response, request, redirect
+from flask import Flask, render_template, Response, request, redirect, jsonify
 import time
 import json
 # import camera driver
@@ -18,6 +18,11 @@ with open('config.json') as f:
 app = Flask(__name__)
 led = Led(config['pin'])
 cam = Camera(led)
+
+
+@app.route('/_update', methods = ['GET'])
+def stuff():
+    return jsonify(led_state=led.status())
 
 @app.route('/')
 def index():
@@ -56,7 +61,7 @@ def snapshot():
         time.sleep(config['shapshot_delay'])
     return Response(gen_snapshot(cam),
                     mimetype='image/jpeg')
-        
+
 @app.route('/led_on')
 def led_on():
     led.switch_leds(True)
@@ -81,7 +86,7 @@ def control_leds():
     else:
         return ('', 504)
     return Response(f'{{"led_status": {resp}}}', mimetype="application/json")
-    
+
 
 @app.route('/leds_on')
 def led_status():
@@ -91,6 +96,6 @@ def led_status():
     else:
         resp = 'false'
     return Response(f'{{"led_status": {resp}}}', mimetype="application/json")
-    
+
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', threaded=True, port=3000)

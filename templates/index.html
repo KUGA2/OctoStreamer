@@ -2,13 +2,35 @@
   <head>
     <title>PyStreamer with LED</title>
   </head>
-  <body>
+  <script type="text/javascript"
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script type="text/javascript">
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+  <script type="text/javascript">
+    var intervalID = setInterval(update_values,1000);
+      function update_values() {
+            $.getJSON($SCRIPT_ROOT + '/_update',
+
+          function(data) {
+            $('#led_state').text(data.led_state);
+            console.log(data)
+          });
+
+        };
+  </script>
+  <body onload="update_values();">
     <h1>PyStreamer with LED</h1>
     <h2>Pages</h2>
-    <p>- Take a snapshot: <a href="{{ url_for('snapshot') }}">/snapshot</a></p>
-    <p>- See the stream: <a href="{{ url_for('video_feed') }}">/video_feed</a></p>
+      <p>- Take a snapshot: <a href="{{ url_for('snapshot') }}">/snapshot</a></p>
+      <p>- See the stream: <a href="{{ url_for('video_feed') }}">/video_feed</a></p>
       <p>- Switch LED on: <a href="{{ url_for('led_on') }}">/led_on</a></p>
       <p>- Switch LED off: <a href="{{ url_for('led_off') }}">/led_off</a></p>
+    <h2>State</h2>
+      <p> LED (PIN {{pin}}) is: <span id="led_state">?</span>
+        <script>
+          document.getElementById("led_state").innerHTML;
+        </script></p>
     <h2>Config</h2>
       <p><em>Adjust config.json and restart server for changes!</em></p>
       <p>Pin for LED: pin: {{pin}}</p>
