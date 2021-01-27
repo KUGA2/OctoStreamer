@@ -1,0 +1,15 @@
+[Unit]
+Description=the OctoStreamer webcam daemon
+After=multi-user.target
+
+[Service]
+WorkingDirectory=/home/pi/OctoStreamer
+User=pi
+Environment="CAMERA=v4l2"
+ExecStart=/usr/bin/python3 /home/pi/OctoStreamer/app.py
+Restart=always
+Type=simple
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target

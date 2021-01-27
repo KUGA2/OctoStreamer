@@ -38,8 +38,24 @@ If you get an error message
 
 you are probably already running a stream. If you are on OctoPi with
 you can stop the preinstalled mjpg-streamer.
-    
+
     sudo systemctl stop webcamd
+
+### Run at startup (as service)
+
+Remove the octopi included mjpg webcamd.service
+
+- `sudo systemctl stop webcamd`
+- `sudo systemctl disable webcamd`
+- Backup: `sudo mv /etc/systemd/system/webcamd.service /home/pi/mjpg-streamer/`
+
+Install new service (this asumes you cloned to ~/OctoStreamer, adjust paths
+and webcamd.service otherwise)
+
+- `sudo ln -s -T /home/pi/OctoStreamer/webcamd.service /etc/systemd/system/webcamd.service`
+- `sudo systemctl daemon-reload`
+- `sudo systemctl enable webcamd`
+- `sudo systemctl start webcamd.service`
 
 ### Test
 
